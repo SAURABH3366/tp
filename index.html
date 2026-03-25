@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Bhumi ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* HEART */
+.heart {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  background: red;
+  transform: rotate(-45deg);
+  animation: beat 1s infinite;
+  cursor: pointer;
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: red;
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -75px;
+  left: 0;
+}
+
+.heart::after {
+  left: 75px;
+  top: 0;
+}
+
+/* HEART BEAT */
+@keyframes beat {
+  0%, 100% { transform: scale(1) rotate(-45deg); }
+  50% { transform: scale(1.2) rotate(-45deg); }
+}
+
+/* CRACK EFFECT */
+.cracked {
+  animation: crack 1s forwards;
+}
+
+@keyframes crack {
+  0% { transform: scale(1) rotate(-45deg); }
+  50% { transform: scale(1.3) rotate(-45deg); }
+  100% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+/* TEXT */
+.text {
+  position: absolute;
+  color: white;
+  font-size: 32px;
+  opacity: 0;
+  text-align: center;
+}
+
+/* SHOW TEXT */
+.show {
+  animation: reveal 2s forwards, blink 1s infinite 2s, glow 2s infinite alternate;
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* BLINK */
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* GLOW */
+@keyframes glow {
+  from { text-shadow: 0 0 10px #fff, 0 0 20px red; }
+  to { text-shadow: 0 0 20px #fff, 0 0 40px red; }
+}
+
+/* FLOATING HEARTS */
+.floating {
+  position: absolute;
+  animation: float 5s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-800px); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="heart" onclick="breakHeart()"></div>
+<div class="text" id="msg">Bhumi &lt;3</div>
+
+<script>
+function breakHeart() {
+  const heart = document.querySelector(".heart");
+  const text = document.getElementById("msg");
+
+  heart.classList.add("cracked");
+
+  setTimeout(() => {
+    text.classList.add("show");
+  }, 800);
+}
+
+/* floating hearts */
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("floating");
+  heart.innerHTML = "❤️";
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 5000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
