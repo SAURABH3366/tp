@@ -2,119 +2,133 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Bhumi ❤️</title>
+<title>For Bhumi</title>
 
 <style>
 body {
   margin: 0;
-  background: black;
+  background: radial-gradient(circle at center, #0a0a0a, #000);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
   overflow: hidden;
-  font-family: Arial, sans-serif;
-  text-align: center;
   color: white;
 }
 
-/* CENTER CONTAINER */
 .container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  text-align: center;
 }
 
-/* BOY (emoji use kiya simple ke liye) */
+/* Boy SVG */
 .boy {
-  font-size: 80px;
-  animation: float 2s infinite ease-in-out;
+  width: 140px;
+  opacity: 0.9;
 }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* BUTTON */
+/* Button */
 button {
-  margin-top: 20px;
-  padding: 12px 25px;
-  font-size: 18px;
-  border: none;
-  border-radius: 25px;
-  background: red;
-  color: white;
+  margin-top: 30px;
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 30px;
+  border: 1px solid #ff4d6d;
+  background: transparent;
+  color: #ff4d6d;
   cursor: pointer;
   transition: 0.3s;
 }
 
 button:hover {
-  background: darkred;
-  transform: scale(1.1);
+  background: #ff4d6d;
+  color: white;
 }
 
-/* HEART */
-.heart {
-  display: none;
-  margin: 40px auto;
-  width: 150px;
-  height: 150px;
-  background: red;
-  transform: rotate(-45deg);
+/* Heart container */
+.heart-container {
   position: relative;
-  animation: beat 1s infinite;
+  width: 120px;
+  height: 120px;
+  margin: 30px auto;
+  display: none;
 }
 
-.heart::before,
-.heart::after {
-  content: "";
+/* Heart halves */
+.half {
   position: absolute;
-  width: 150px;
-  height: 150px;
-  background: red;
-  border-radius: 50%;
+  width: 60px;
+  height: 100px;
+  background: #ff4d6d;
+  border-radius: 60px 60px 0 0;
+  top: 0;
 }
 
-.heart::before { top: -75px; left: 0; }
-.heart::after { left: 75px; top: 0; }
-
-@keyframes beat {
-  0%,100% { transform: scale(1) rotate(-45deg); }
-  50% { transform: scale(1.2) rotate(-45deg); }
+.left {
+  left: 0;
+  transform-origin: right;
 }
 
-/* TEXT INSIDE HEART */
+.right {
+  right: 0;
+  transform-origin: left;
+}
+
+/* Split animation */
+.split .left {
+  animation: leftOpen 1s forwards;
+}
+
+.split .right {
+  animation: rightOpen 1s forwards;
+}
+
+@keyframes leftOpen {
+  to { transform: rotate(-45deg) translateX(-30px); }
+}
+
+@keyframes rightOpen {
+  to { transform: rotate(45deg) translateX(30px); }
+}
+
+/* Text */
 .text {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
-  font-size: 24px;
+  transform: translate(-50%, -50%);
   opacity: 0;
+  font-size: 22px;
+  letter-spacing: 1px;
 }
 
-/* SHOW TEXT */
 .show {
-  animation: reveal 2s forwards, glow 2s infinite alternate;
+  animation: fadeIn 2s forwards, glow 3s infinite alternate;
 }
 
-@keyframes reveal {
-  from { opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(45deg);}
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(45deg);}
+@keyframes fadeIn {
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
 }
 
 @keyframes glow {
-  from { text-shadow: 0 0 10px white, 0 0 20px red; }
-  to { text-shadow: 0 0 20px white, 0 0 40px red; }
+  from { text-shadow: 0 0 10px #ff4d6d; }
+  to { text-shadow: 0 0 25px #ff4d6d, 0 0 40px #ff4d6d; }
 }
 
-/* FLOATING HEARTS */
-.floating {
+/* subtle floating dots */
+.dot {
   position: absolute;
-  animation: floatUp 5s linear infinite;
+  width: 4px;
+  height: 4px;
+  background: #ff4d6d;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: float 6s linear infinite;
 }
 
-@keyframes floatUp {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-800px); opacity: 0; }
+@keyframes float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-800px); }
 }
 </style>
 </head>
@@ -122,12 +136,21 @@ button:hover {
 <body>
 
 <div class="container">
-  <div class="boy">👦</div>
-  <button onclick="openHeart()">Open Your Heart ❤️</button>
 
-  <div class="heart" id="heart">
+  <!-- Boy SVG -->
+  <svg class="boy" viewBox="0 0 64 64" fill="white">
+    <circle cx="32" cy="20" r="10"/>
+    <rect x="22" y="30" width="20" height="25" rx="10"/>
+  </svg>
+
+  <button onclick="openHeart()">Open your heart</button>
+
+  <div class="heart-container" id="heart">
+    <div class="half left"></div>
+    <div class="half right"></div>
     <div class="text" id="text">Bhumi ❤️</div>
   </div>
+
 </div>
 
 <script>
@@ -136,27 +159,25 @@ function openHeart() {
   const text = document.getElementById("text");
 
   heart.style.display = "block";
+  heart.classList.add("split");
 
   setTimeout(() => {
     text.classList.add("show");
-  }, 800);
+  }, 1000);
 }
 
-/* floating hearts */
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("floating");
-  heart.innerHTML = "❤️";
+/* subtle particles */
+function createDot() {
+  const dot = document.createElement("div");
+  dot.className = "dot";
+  dot.style.left = Math.random() * 100 + "vw";
+  dot.style.top = "100vh";
+  document.body.appendChild(dot);
 
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (Math.random() * 20 + 20) + "px";
-
-  document.body.appendChild(heart);
-
-  setTimeout(() => heart.remove(), 5000);
+  setTimeout(() => dot.remove(), 6000);
 }
 
-setInterval(createHeart, 300);
+setInterval(createDot, 200);
 </script>
 
 </body>
